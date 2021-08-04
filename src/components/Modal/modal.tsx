@@ -16,7 +16,6 @@ interface ModalProps {
 }
 
 export function Modal({ visible, item, onChangeVisible }: ModalProps) {
-  console.log(item)
   return (
     <CModal alignment="center" visible={visible} onDismiss={() => onChangeVisible(false)}>
       <CModalHeader onDismiss={() => onChangeVisible(false)}>
