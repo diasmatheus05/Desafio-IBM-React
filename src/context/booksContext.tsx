@@ -59,8 +59,8 @@ export function BooksContextProvider({ children }: BooksContextProviderProps) {
           date: book.volumeInfo?.publishedDate,
           pages: book.volumeInfo?.pageCount,
           category: book.volumeInfo.categories?.join(', '),
-          language: book.volumeInfo.language,
-          description: book.searchInfo.textSnippet,
+          language: book.volumeInfo?.language,
+          description: book.searchInfo?.textSnippet,
         }
       })
       setBooks(books_aux)

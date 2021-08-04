@@ -32,6 +32,7 @@
 }
 .home-page .home-container .table-wrapper::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   background: transparent;
 }
 .home-page .home-container .table-wrapper::-webkit-scrollbar-thumb {
@@ -57,6 +58,35 @@
   font-size: 20px;
   line-height: 1.2;
   color: var(--text);
+  text-align: center;
 
   margin: 0;
+}
+
+@media (max-width: 1036px) {
+  .home-page .home-container .table-wrapper {
+    height: calc(100% - 119px);
+  }
+}
+
+@media (max-width: 550px) {
+  .home-page .home-container .table-wrapper {
+    height: calc(100% - 153px);
+  }
+
+  .home-page .no-books .no-results {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 450px) {
+  .home-page .home-container .table-wrapper {
+    height: calc(100% - 180px);
+  }
+}
+
+@media (max-width: 375px) {
+  .home-page .home-container .table-wrapper {
+    height: calc(100% - 199px);
+  }
 }

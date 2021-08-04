@@ -39,5 +39,3 @@ export function Home() {
     </div>
   )
 }
-
-// Responsividade

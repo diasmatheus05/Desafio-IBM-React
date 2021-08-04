@@ -24,7 +24,7 @@ export function Modal({ visible, item, onChangeVisible }: ModalProps) {
       </CModalHeader>
       <CModalBody className="my-modal-body">
         { item?.img && <img src={item.img} alt="Capa" />}
-        { item?.description && <p><strong>Descrição:</strong> {item.description}</p>}
+        { item?.description && <p dangerouslySetInnerHTML={{ __html: item.description }} />}
         { item?.category && <p><strong>Categoria:</strong> {item.category}</p>}
         { item?.authors && <p><strong>Autor:</strong> {item.authors}</p>}
         { item?.date && <p><strong>Data de publicação:</strong> {item.date}</p>}

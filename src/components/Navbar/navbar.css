@@ -17,3 +17,41 @@
 .navbar .pagination {
   margin-bottom: 0;
 }
+
+@media (max-width: 1036px) {
+  .navbar .my-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 550px) {
+  .navbar .container-fluid {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .navbar .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    text-align: center;
+  }
+
+  .navbar .my-collapse {
+    margin-top: 0;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 424px) {
+  .navbar .navbar-brand {
+    margin-right: 0;
+  }
+}
