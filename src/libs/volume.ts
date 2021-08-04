@@ -8,6 +8,7 @@ export interface Book {
   id: string;
   volumeInfo: {
     title: string;
+    subtitle: string;
     authors: string[];
     publisher: string;
     publishedDate: string;
@@ -17,5 +18,9 @@ export interface Book {
       thumbnail: string;
     },
     language: string;
+    categories: string[];
+  };
+  searchInfo: {
+    textSnippet: string;
   }
 }

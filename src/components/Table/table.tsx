@@ -1,4 +1,10 @@
+import { useState } from 'react';
+
+import { UsefulBooks } from '../../libs/books';
+
 import { useBooksContext } from '../../context/booksContext';
+
+import { Modal } from '../Modal/modal';
 
 import { 
   CTable,
@@ -23,7 +29,16 @@ interface TableProps {
 export function Table({ columns, columnsToShow, items }: TableProps) {
   const { favorites, handleFavorites } = useBooksContext();
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [item, setItem] = useState<UsefulBooks>()
+
+  function handleShowModalClick(item: UsefulBooks) {
+    setItem(item)
+    setModalVisible(true)
+  }
+
   return (
+    <>
     <CTable striped className="my-table">
       <CTableHead>
         <CTableRow>
@@ -42,12 +57,16 @@ export function Table({ columns, columnsToShow, items }: TableProps) {
                 { columns.map((col, index) => {
                     if (index === 0)
                       return <CTableHeaderCell key={item.id + '-' + index}>{ itemIndex + 1 }</CTableHeaderCell>
-                    if (col === 'small_img')
-                      return <CTableDataCell key={item.id + '-' + index}><img src={item[col]} alt="Capa" /></CTableDataCell>
-                    if (col === 'favorite') {
+                    else if (col === 'small_img') {
                       return (
                         <CTableDataCell key={item.id + '-' + index}>
-                          <img onClick={() => handleFavorites(item.id)} className="favorite" src={favorites.includes(item.id) ? favorite_select_icon : favorite_icon} alt="Capa" />
+                          <img src={item[col]} alt="Capa" onClick={() => handleShowModalClick(item)} />
+                        </CTableDataCell>
+                      )
+                    } else if (col === 'favorite') {
+                      return (
+                        <CTableDataCell key={item.id + '-' + index}>
+                          <img onClick={() => handleFavorites(item)} className="favorite" src={favorites.includes(item.id) ? favorite_select_icon : favorite_icon} alt="Capa" />
                         </CTableDataCell>
                       ) 
                     } else
@@ -60,5 +79,12 @@ export function Table({ columns, columnsToShow, items }: TableProps) {
         }
       </CTableBody>
     </CTable>
+
+    <Modal
+      visible={modalVisible}
+      onChangeVisible={value => setModalVisible(value)}
+      item={item}
+    />
+    </>
   )
 }

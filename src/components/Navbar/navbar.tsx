@@ -15,20 +15,21 @@ import {
 import "./navbar.css";
 
 export function Navbar() {
-  const { pages, pageIndex, handleTermsChange, handlePageIndexChange } = useBooksContext();
+  const { pages, pageIndex, favoriteSelected, handleTermsChange, handlePageIndexChange, toggleFavoriteSelected } = useBooksContext();
 
   return (
     <CNavbar colorScheme="light" className="bg-light">
       <CContainer fluid>
         <CNavbarBrand className="mb-0 h1">Desafio IBM React.Js | GOOGLE BOOKS</CNavbarBrand>
+        <CNavbarBrand className="mb-0 h1">{favoriteSelected ? 'Favoritos' : 'Home'}</CNavbarBrand>
         
         <CCollapse className="my-collapse navbar-collapse" visible={true}>
-          <CNavLink href="#">Favoritos</CNavLink>
+          <CNavLink href="#" onClick={toggleFavoriteSelected}>{favoriteSelected ? 'Home' : 'Favoritos'}</CNavLink>
           <CForm className="d-flex">
             <CFormControl
               type="search"
               className="me-2"
-              placeholder="Search"
+              placeholder="Pesquisar"
               onChange={event => handleTermsChange(event.target.value)}
             />
           </CForm>
@@ -38,7 +39,7 @@ export function Navbar() {
             </CPaginationItem>
             { pages?.map(page => {
                 if (page >= pageIndex - 1 && page <= pageIndex + 1)
-                  return <CPaginationItem active={pageIndex === page}>{page}</CPaginationItem>
+                  return <CPaginationItem active={pageIndex === page}>{page + 1}</CPaginationItem>
               })
             }
             <CPaginationItem aria-label="Next" onClick={() => handlePageIndexChange(true)}>

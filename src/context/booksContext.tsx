@@ -8,10 +8,13 @@ type BooksContextData = {
   books?: UsefulBooks[];
   pages?: number[];
   favorites: string[];
+  favoritesItems: UsefulBooks[];
+  favoriteSelected: boolean;
   pageIndex: number;
   handleTermsChange: (value: string) => void;
-  handleFavorites: (id: string) => void;
+  handleFavorites: (item: UsefulBooks) => void;
   handlePageIndexChange: (plus: boolean) => void;
+  toggleFavoriteSelected: () => void;
 }
 
 export const BooksContext = createContext({} as BooksContextData);
@@ -21,14 +24,18 @@ type BooksContextProviderProps = {
 }
 
 export function BooksContextProvider({ children }: BooksContextProviderProps) {
-  const [books, setBooks] = useState<UsefulBooks[]>();
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [terms, setTerms] = useState<string>();
-  const [reload, setReload] = useState(false);
+  const [books, setBooks] = useState<UsefulBooks[]>();
   
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favoritesItems, setFavoritesItems] = useState<UsefulBooks[]>([]);
+  const [favoriteSelected, setFavoriteSelected] = useState(false);
+
   const [pages, setPages] = useState<number[]>();
   const [pageIndex, setPageIndex] = useState(0);
-
+  
+  const [reload, setReload] = useState(false);
+  
   useEffect(() => {
     if (terms) {
       fetchBooks(terms, pageIndex * 40);
@@ -46,10 +53,14 @@ export function BooksContextProvider({ children }: BooksContextProviderProps) {
           img: book.volumeInfo.imageLinks?.thumbnail,
           small_img: book.volumeInfo.imageLinks?.smallThumbnail,
           title: book.volumeInfo?.title,
+          subtitle: book.volumeInfo?.subtitle,
           authors: book.volumeInfo.authors?.join(', '),
           publisher: book.volumeInfo?.publisher,
           date: book.volumeInfo?.publishedDate,
           pages: book.volumeInfo?.pageCount,
+          category: book.volumeInfo.categories?.join(', '),
+          language: book.volumeInfo.language,
+          description: book.searchInfo.textSnippet,
         }
       })
       setBooks(books_aux)
@@ -72,14 +83,21 @@ export function BooksContextProvider({ children }: BooksContextProviderProps) {
     setTerms(value)
   }
 
-  function handleFavorites(id: string) {
+  function handleFavorites(item: UsefulBooks) {
     const aux = favorites
-    if (favorites.includes(id)) {
-      aux.splice(aux.indexOf(id), 1)
+    const auxItems = favoritesItems
+    const index = aux.indexOf(item.id)
+    if (favorites.includes(item.id)) {
+      aux.splice(index, 1)
+      auxItems.splice(index, 1)
+      setFavorites(aux)
+      setFavoritesItems(auxItems)
     } else {
-      aux.push(id)
+      aux.push(item.id)
+      auxItems.push(item)
     }
     setFavorites(aux)
+    setFavoritesItems(auxItems)
     setReload(!reload)
   }
 
@@ -95,15 +113,22 @@ export function BooksContextProvider({ children }: BooksContextProviderProps) {
     }
   }
 
+  function toggleFavoriteSelected() {
+    setFavoriteSelected(!favoriteSelected)
+  }
+
   return (
     <BooksContext.Provider value={{ 
       books,
       pages,
       favorites,
+      favoritesItems,
+      favoriteSelected,
       pageIndex,
       handleTermsChange,
       handleFavorites,
       handlePageIndexChange,
+      toggleFavoriteSelected,
     }}>
       {children}
     </BooksContext.Provider>
