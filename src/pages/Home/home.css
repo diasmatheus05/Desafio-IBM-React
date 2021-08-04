@@ -20,8 +20,21 @@
 
 .home-page .home-container .table-wrapper {
   width: 100%;
+  height: calc(100% - 70px);
 
   padding: 10px;
 
   overflow-y: auto;
+}
+
+.home-page .home-container .table-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.home-page .home-container .table-wrapper::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+.home-page .home-container .table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--dark-blue);
+  border-radius: 5px;
 }

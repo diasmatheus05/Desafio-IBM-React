@@ -1,0 +1,11 @@
+.my-table img {
+  max-width: 60px;
+}
+
+.my-table img.favorite {
+  cursor: pointer;
+}
+
+.my-table tr {
+  vertical-align: middle;
+}
